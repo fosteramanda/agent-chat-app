@@ -1,23 +1,18 @@
 [project]
 name = "quartapp"
 version = "1.0.0"
-description = "Create a simple chat app using Quart and OpenAI"
+description = "Create a simple chat app using Quart and Azure AI Agents"
 dependencies = [
     "quart",
     "werkzeug",
     "gunicorn",
-    "uvicorn",
-    # Used by uvicorn on non-Windows platforms
-    "uvloop>=0.16.0; sys_platform != 'win32' and (sys_platform != 'cygwin' and platform_python_implementation != 'PyPy')",
-    # Recommended for uvicorn
-    "httptools",
-    # Used by uvicorn for reload functionality
-    "watchfiles",
+    "uvicorn[standard]",
     "openai",
     "azure-identity",
     "aiohttp",
     "python-dotenv",
-    "pyyaml"
+    "pyyaml",
+    "azure-ai-projects"
     ]
 
 [build-system]

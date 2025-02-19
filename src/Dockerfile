@@ -10,14 +10,18 @@ RUN apk add --update --no-cache tini
 # https://cryptography.io/en/latest/installation/#building-cryptography-on-linux
 RUN apk add gcc musl-dev python3-dev libffi-dev openssl-dev cargo pkgconfig
 
+
 # ------------------- Stage 1: Build Stage ------------------------------
 FROM base AS build
 
 COPY requirements.txt .
 
+ADD packages packages
+
 RUN pip3 install -r requirements.txt
 
 COPY . .
+
 # ------------------- Stage 2: Final Stage ------------------------------
 FROM base AS final
 
@@ -26,6 +30,11 @@ RUN addgroup -S app && adduser -S app -G app
 COPY --from=build --chown=app:app /usr/local/lib/python3.11 /usr/local/lib/python3.11
 COPY --from=build --chown=app:app /usr/local/bin /usr/local/bin
 COPY --from=build --chown=app:app /code /code
+
+# Copy the files directory
+COPY --chown=app:app files /code/files
+
+# Set environment variables for Azure service principal
 
 USER app
 
