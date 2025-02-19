@@ -16,7 +16,7 @@ FROM base AS build
 
 COPY requirements.txt .
 
-ADD packages packages
+# ADD packages packages
 
 RUN pip3 install -r requirements.txt
 
